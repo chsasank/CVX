@@ -1,0 +1,5 @@
+M = csvread('amzn.csv',1,1);
+
+% find 20 day returns
+P_now = M(:,4);
+P_next = circshift(P_now,20);

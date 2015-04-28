@@ -1,0 +1,396 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ margin = 1in
+ }
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\intr}{\operatorname{int}}
+\newcommand{\Rn}{\mathbb{R}^n}
+
+\newcommand{\norm}[1]{\|#1\|}
+
+\newcommand*\conj[1]{\overline{#1}}
+\newcommand\inrpd[2]{\langle #1, #2 \rangle}
+
+\usepackage[T1]{fontenc}
+\usepackage{todonotes}
+\usepackage{tgpagella}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{Convex Optimization}
+\author{Sasank}
+\date{\today}
+\maketitle
+
+\section{Affine Sets, Convex Sets, Cones etc.}
+\begin{description}
+\item[Affine Set] contains the \emph{line} through any two points in the set. Equivalently $S$ is affine if $S = \{x \mid Ax = b\}$ for some matrix $A$. This can be proven by showing that $S - x_p$ is a vector space for some $x_p \in S$
+
+\item[Convex Set] contains \emph{line segment} between any two points in the set. Convex hull of a set is set of all convex combinations of points of the set. 
+
+\item[Cone] S is cone if $x \in S$ then $\theta x \in S$ for $\theta \geq 0$. 
+
+\item[Convex Cone] S is convex cone if $x_1, x_2 \in S$ then $\theta_1 x_1 + \theta_2 x_2 \in S$ for $\theta_1,\theta_2 \geq 0$. 
+
+\item[Hyperplane] Sets of the form $\{x \mid a^Tx = b\}$. $a$ is the normal vector.
+
+\item[Halfspace] Sets of the form $\{x \mid a^Tx \leq b\}$
+
+\item[Euclidean ball and Ellipsoid] Ball is set of the form $B(x_c,r) = \{ x \mid \|x-x_c\| \leq r\}$. An ellipsoid is set of the form $\{x \mid (x-x_c)^TP^{-1}(x-x_c) \leq 1 \}$ with $P \in S^n_{++}$
+
+\end{description}
+
+Note that Affine sets, convex cones, hyperplanes, halfspaces, Euclidean balls and Ellipsoids are convex and hyperplanes are also affine.
+
+Following are the definitions of some combinations of points $x_1$ and $x_2$. Here $\theta_i \in R$.
+\begin{description}
+\item[Linear combination] $\theta_1 x_1 + \theta_2 x_2 $
+\item[Affine combination] $\theta_1 x_1 + \theta_2 x_2 $, where $\theta_1 + \theta_2 = 1 $ 
+\item[Convex combination] $\theta_1 x_1 + \theta_2 x_2 $, where $\theta_1 + \theta_2 = 1 $ , $\theta_1, \theta_2 \geq 0$
+\item[Conic combination] $\theta_1 x_1 + \theta_2 x_2 $, where $\theta_1, \theta_2 \geq 0$
+\end{description}
+
+\section{Some spaces}
+\subsection{General Topological Spaces}
+General topological spaces have some sense of neighbourhood. Following are the definitions for such spaces.
+\begin{description}
+\item[Closure of a set] $\cl(S) = S \cup \{\lim x_i \text{ for convergent }\{x_i\} \subseteq S \}$
+\item[Closed set] if $\cl(S) = S$
+\item[Open set] if $S^c$ is closed
+\item[Interior($S$)] $= \bigcup_{S' \subseteq S \text{ open}} S'$
+\item[Boundary($S$)] $= \cl(S) - \intr(S)$
+\end{description}
+
+\subsection{Normed Vector Space}
+A function $\|.\|$ is called norm if it satisfies
+\begin{itemize}
+\item $\|x\| \geq 0$ ; $\| x\| = 0$ iff $x = 0$
+\item $\| tx \| = |t|\|x \|$ for $t \in R$
+\item $\|x + y\| \geq \|x\| + \|y\|$ 
+\end{itemize}
+A vector space on which a norm is defined is called normed vector space. These are equivalent characterizations for sets defined before for normed vector spaces. 
+\begin{description}
+\item[Closure($S$)] $ = \{x \mid \forall \epsilon > 0, S \cap B(x,\epsilon) \neq \emptyset \}$
+\item[Closed set] if $\cl(S) = S$
+\item[Open set] $\forall x \in S$, $\exists \epsilon >0$ s.t. $B(x,\epsilon) \subseteq S$
+\item[Interior($S$)] $= \{x \mid x\in S, B(x,\epsilon) \subseteq S \text{ for some }\epsilon >0\}$
+\item[Boundary($S$)] $= \cl(S) - \intr(S)$
+\end{description}
+
+Norm ball is of the form $\{x \mid \norm{x-x_c} \leq r \}$ and norm cone is defined as $\{(x,t) \mid \norm{x} \leq t \}$.
+
+\subsection{Inner Product Space}
+Inner product space is a vector space with a inner product defined on it. Inner product needs to satisfy following properties:
+\begin{description}
+\item[Conjugate symmetry] $\inrpd{x}{y}= \conj{\inrpd{y}{x}}$
+\item[Linearity] $\inrpd{ax}{y} = a  \inrpd{x}{y}$ , $\inrpd{x+y}{z} =  \inrpd{x}{z}+ \inrpd{y}{z}$
+\item[Positive definiteness] $\inrpd{x}{x} \geq 0$ with equality iff $x = 0$
+\end{description} 
+
+An inner product induces a norm as follows $\|x\| = \sqrt{\inrpd{x}{x}}$. Thus every inner product space is a normed vector space.
+Note that not all norms are inner products. For example consider p-norm $\|x\|_p = \left(\sum_{i = 1}^n |x_i|^p \right)^{1/p}$ for $x \in \Rn$. This is an inner product if and only if $p = 2$
+
+\subsection{Banach and Hilbert Spaces}
+A metric space is complete if every Cauchy sequence is convergent.
+\begin{description}
+\item[Banch space] is a complete normed vector space
+\item[Hilbert space] is a complete inner product space
+\end{description}
+
+\subsection{Some Examples of Vector Spaces}
+
+\begin{description}
+\item[Sequences] Infinite sequences, sequences with finite non zero elements, $l^p$ = sequences with bounded p-norm $\|x\|_p = \left(\sum_{i = 1}^\infty |x_i|^p \right)^{1/p}$. $l^p$ is a Banach space for $p \geq 1$ and a Hilbert space for $p = 2$.
+
+\item[Polynomials] Polynomials, polynomials with degree $\leq n$, polynomials in multiple variables. 
+
+\item[Functions] $f: X \rightarrow V$ has dimension $|X|\operatorname{dim}(V)$.
+$L_p = \{ f \mid \text{measurable f with }  \|f\|_p = \left(\int_{i = 1}^\infty |f(x)|^p dx \right)^{1/p} < \infty \}$ is a Banach space for $p \geq 1$ and a Hilbert space for $p = 2$.
+
+\item[Matrices] $m \times n$ matrices. Let $N(x)$ be a vector norm. Then a matrix norm can be defined as 
+\[
+\|A\| = \sup_{x \neq 0} \frac{N(Ax)}{N(x)}
+\]
+Frobenius norm of matrices is defined as
+\[
+\|A\| = \sqrt{\sum_{i,j} a_{ij}} = \operatorname{trace}(A^TA)
+\]
+and Frobenius inner product is defined as $\inrpd{A}{B} = \operatorname{trace}(A^T B)$
+\end{description}
+
+\section{Operators \& Duals}
+\subsection{Linear Operators}
+A linear operator $T$ between vector spaces $X$ and $Y$ is $T: X\rightarrow Y$ such that $\forall x,x', \lambda, \mu$ 
+\[
+T(\lambda x + \mu x') =\lambda  T(x )+ \mu T(x') 
+\] 
+These are some properties and definitions of linear operators:
+\begin{itemize}
+\item If X \& Y are normed vector spaces, we can define operator norm as
+\[
+\|T\| = \sup_{x \neq 0} \frac{\norm{T(x)}}{\norm{x}}
+\]
+\item $T$ is called bounded if $\norm{T} \leq N$ for some $N \in R$. Equivalently if $\exists M$ such that $\norm{Tx} \leq M \norm{x}$  $\forall x \in X$
+\item $T$ is continuous if and only if $T$ is bounded
+\item Can generalize eigenfunctions and eigenvalues to operators.
+\item $X$ and $Y$ are called linearly isomorphic if $T$ is bijection.
+\item Kernel of T = $\{x \in X \mid Tx = 0 \}$. Range of T = $\{y \in Y \mid y = Tx \text{ for some } x \in X \}$
+\item If $X$ is a normed v.s. and Y is Banach, then $T: X \rightarrow Y$ is Banach with respect to operator norm.
+\item $T^*: Y \rightarrow X$ is called adjoint linear map of $T: X \rightarrow Y$ if $\inrpd{Tx}{y}_Y = \inrpd{x}{T^*y}_X \; \forall x \in X, y \in Y$
+\end{itemize}
+
+\subsection{Dual Spaces \& Cones}
+Linear operator $T: X \rightarrow R$ is called a linear functional. We define the following
+
+\begin{description}
+\item[Algebraic dual] $X^\# = \{T \mid T: X \rightarrow R \}$. i.e, set of all linear functionals.
+If $X$ is fdvs, $X \cong X^\#$.
+
+\item[Topological dual] $X^* = \{T \mid \text{continuous}\; T: X \rightarrow R \}$. i.e, set of all continuous/bounded linear functionals.
+
+\item[Algebraic dual cone] $C^\# = \{T \in X^\# \mid T(x) \geq 0\; \forall x \in C  \}$. Note that $C$ can be any subset of $X$.
+
+\item[Topological dual cone] $C^* = \{T \in X^* \mid T(x) \geq 0\; \forall x \in C  \}$. It can be easily seen that $C^*$ is always a convex cone irrespective of $C$.
+\end{description}
+
+If X is finite dimensional vector space with a norm, $X^\# = X^* \cong X$ and $C^\# = C^*$. 
+
+\subsubsection{Riesz Representation Theorem}
+If $X$ is a Hilbert space and $T$ is a bounded linear functional, then there exists a \emph{unique} $y \in X$ such that \[T(x) = \inrpd{y}{x} \; \forall x \in X \]
+In fact $X^* =\{T_y(x) = \inrpd{y}{x} \mid x \in X \}$. Furthermore $X \cong X^*$.\\
+
+Therefore we can simplify our notion of (topological) dual cone as \[C^* = \{y \in X \mid \inrpd{y}{x} \geq 0\; \forall x \in C \} \]. 
+
+\paragraph{Properties of dual cones}
+\begin{itemize}
+\item $C^*$ is closed because it is intersection of (closed) halfspaces. Thus $C^*$ is closed convex cone for all $C \subseteq X$.
+\item $C_1 \subseteq C_2 \implies C_2^* \subseteq C_1^*$ 
+\item $\intr(C^*) = \{y \in X \mid \inrpd{y}{x} > 0 \; \forall x \in X \}$
+\item If $C$ is a cone and $\intr(C) \neq \emptyset$, then $C^*$ is pointed. i.e if $x \in C^*$ and $-x \in C^*$ then $x = 0$.
+\item If C is a closed convex cone, $C^{**} = (C)$. Prove this using strict separating hyperplane theorem.
+\item If C is a convex cone, $C^{**} = \operatorname{closure}(C)$
+\item If $\operatorname{closure}(C)$ is pointed then $ \intr(C^*) \neq \emptyset$
+\end{itemize}
+
+\subsection{Positive Semidefinite Cone}
+$S^n_+$, set of all symmetric positive semidefinite matrices is a convex cone. 
+On the other hand, $S^n_{++}$, set of all symmetric positive definite matrices is a convex set but not cone ($0 \notin S^n_{++}$). Some notable properties of positive semidefinite cone:
+\begin{itemize}
+\item $(S^n_+)^* = S^n_+$
+\item $\intr(S^n_+) = S^n_{++}$
+\end{itemize}
+
+\section{Linear \& Conic Programs and Weak Duality}
+\subsection{Linear Program and Its Dual}
+Following optimization problem is called linear program:
+\begin{equation}
+\begin{aligned}
+& \underset{x\in \Rn}{\text{minimize}}
+& & c^Tx \\
+& \text{subject to}
+& & -Ax + b \leq 0 
+\end{aligned}
+\tag{LP}
+\end{equation}
+
+We'll derive its dual. For all $\lambda \in \Rn_+$,  we have $\lambda^T(-Ax + b) \leq 0$. Therefore for all $\lambda \in \Rn_+$ we have,
+\begin{align*}
+c^Tx  &\geq  c^Tx  + \lambda^T(-Ax + b) \\
+	  &= \lambda^T b + (c - A^T \lambda)^Tx\\
+	  & \geq \min_{x}\lambda^T b + (c - A^T \lambda)^Tx\\
+	  & = \begin{cases} 
+		      \lambda^T b   & A^T \lambda = c \\
+		      -\infty 		& A^T \lambda \neq c 
+		   \end{cases}
+\end{align*}
+
+Thus we can write 
+
+\begin{equation*}
+\begin{aligned}
+& \underset{x\in \Rn}{\text{minimize}}
+& & c^Tx \\
+& \text{subject to}
+& & -Ax + b \leq 0 
+\end{aligned}
+\leq 
+\begin{aligned}
+& \underset{\lambda\geq 0}{\text{maximize}}
+& & b^T\lambda \\
+& \text{subject to}
+& & A^T\lambda = c 
+\end{aligned}
+\end{equation*}
+
+We call the problem 
+\begin{equation}
+\begin{aligned}
+& \underset{\lambda\geq 0}{\text{maximize}}
+& & b^T\lambda \\
+& \text{subject to}
+& & A^T\lambda = c 
+\end{aligned}
+\tag{LD}
+\end{equation}
+as dual linear program. The property LP $\leq$ LD is called weak duality.
+
+\subsection{Conic Program and Its Dual}
+\subsubsection{Generalized Inequality}
+Let $K$ be a cone. We define $a \geq_K b$ if $a - b \in K$. This is a valid inequality iff K is a convex pointed cone. i.e, following properties need to be satisfied
+\begin{description}
+\item[Reflexivity] $a \geq a$
+\item[Anti-symmetry] If both $a \geq b$ and $b \geq a$, then $a = b$
+\item[Transitivity] If both $a \geq b$ and $b \geq c$, then $a \geq c$
+\item[Compatible with linear operators]:
+\begin{description}
+\item[Homogenity] If $a \geq b$ and $\mu \in R_+$, then $\mu a \geq \mu b$
+\item[Additivity] If $a \geq b$ and $c \geq d$, then $ a + c \geq b + d$
+\end{description}
+\end{description}
+A convex cone is called proper if it is closed, solid and pointed. 
+
+\subsubsection{Conic Program \& Weak Duality}
+Following optimization problem is called conic program:
+\begin{equation}
+\begin{aligned}
+& \underset{x\in \Rn}{\text{maximize}}
+& & c^Tx \\
+& \text{subject to}
+& & -Ax + b \leq_k 0 
+\end{aligned}
+\tag{CP}
+\end{equation}
+
+To derive a weak dual of this, we need a set $D$ such that $\forall \lambda \in D, \lambda^T(Ax-b)\geq 0$. 
+Dual cone $K^*$ satisfies this criterion. Therefore the following is the conic dual program:
+\begin{equation}
+\begin{aligned}
+& \underset{\lambda \in K^*}{\text{maximize}}
+& & b^T\lambda \\
+& \text{subject to}
+& & A^T\lambda = c 
+\end{aligned}
+\tag{CD}
+\end{equation}
+We have CP $\leq$ CD. Note that LP is a special case of CP where $K = \Rn$.
+
+Following is the alternate standard notation and generalization for conic program and its dual.
+\begin{equation}
+\begin{aligned}
+& \underset{}{\text{maximize}}
+& &\inrpd{c}{x}_V \\
+& \text{subject to}
+& & Ax = b , x\in K \subseteq V
+\end{aligned}
+\tag{CP}
+\end{equation}
+
+where $A:V \rightarrow \Rn$ is a linear map. (If $K = S_n^+ \subset V = S^n$, then CP is called semi-definite program.)
+Denote feasible set of CP by $F_p$. Then conic dual is 
+
+\begin{equation}
+\begin{aligned}
+& \underset{}{\text{maximize}}
+& &\inrpd{b}{\lambda}_{\Rn} \\
+& \text{subject to}
+& & c - A^*\lambda \in K^* , \lambda \in \Rn 
+\end{aligned}
+\tag{CD}
+\end{equation}
+
+where $A^*:\Rn \rightarrow V$ is adjoint of $A$. Denote feasible set of CD by $F_d$. In this notation we have CP $\geq$ CD. Some definitions and properties:
+\begin{itemize}
+\item CP $-$ CD is called duality gap and is always $\geq 0$
+\item If CP or CD is feasible but unbounded, then the other is infeasible or has no feasible solution
+\item If a pair of feasible solutions can be found to the both primal and dual problems with equal objective, then they are both optimal
+\end{itemize}
+
+\section{Strong Duality}
+\paragraph{Theorem:}
+\begin{enumerate}
+\item Let CP or CD be infeasible and let other be feasible and have an interior. Then the other is unbounded.
+\item Let CP and CD be both feasible and let one of them have an interior. Then there is $0$ duality gap.
+\item Let CP and CD be both feasible and have an interior. Then both have optimal solutions with  $0$ duality gap.
+\end{enumerate}
+To prove this we need to prove theorem of alternatives/Farkas' lemma.
+
+\subsection{Theorem of alternatives}
+\begin{enumerate}
+\item Consider $\{x \mid Ax = b, x\in K \}$ for a proper cone $K \subseteq V$ and $A: V \rightarrow \Rn$. Suppose $\exists \lambda$ such that $-A^* \lambda \in \intr(K^*)$. \\
+Then $\{x \mid Ax = b, x\in K \}$ has a  feasible solution $x$ iff $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ has no feasible solution.
+
+\item Consider $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$ for a proper cone $K \subseteq V$ and $A: V \rightarrow \Rn$. Suppose $\exists x$ such that $Ax = 0, x \in \intr(K^*)$. \\
+Then, $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$  has a  feasible solution $(\lambda,s)$ iff $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ has no feasible solution.
+\end{enumerate}
+
+\paragraph{Proof of 1:}
+Let $\bar{\lambda}$ be such that $-A^* \bar{\lambda} \in K^* $ and let $\{x \mid Ax = b, x\in K \}$ has a feasible solution $\bar{x}$. Then
+\[
+-\inrpd{\bar{\lambda}}{b} = -\inrpd{\bar{\lambda}}{A\bar{x}} = \inrpd{-A^*\bar{\lambda}}{\bar{x}} \geq 0
+\]
+Thus $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ has no solution, i.e. empty.
+\\
+
+$C= \{y \mid y = Ax, x\in K \}$ is a closed convex set.
+Let $\{x \mid Ax = b, x\in K \}$ be empty. i.e $b \notin C$. By strict separating hyperplane theorem, $\exists \lambda \in \Rn$ such that 
+\[ \inrpd{\lambda}{b} > \inrpd{\lambda}{y}\; \forall y \in C\]
+Using the definition of $C$, we have 
+\[ \inrpd{\lambda}{b} > \inrpd{\lambda}{Ax} =  \inrpd{A^*\lambda}{x}\; \forall x \in K\]
+Thus $\inrpd{A^*\lambda}{x}$ is bounded above $\forall x \in K$. Additionally $\inrpd{A^*\lambda}{x} \leq 0$ as otherwise $\inrpd{A^*\lambda}{\alpha x}$ can made as large as needed contradicting previous statement. Since $0 \in K$, $\inrpd{\lambda}{b} >0$. 
+Thus the set $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ is non empty.
+$\square$
+
+\paragraph{Proof of 2:}
+Let  $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$  has a  feasible solution $(\bar{\lambda},\bar{s})$ and  $\bar{x} \in K^*$ be such that $A\bar{x} = 0$. Then 
+\[
+\inrpd{\bar{s}}{\bar{x}} =  \inrpd{c - A^*\bar{\lambda} }{\bar{x}} = \inrpd{c}{\bar{x}} - \inrpd{ A^*\bar{\lambda} }{\bar{x}}
+= \inrpd{c}{\bar{x}} - \inrpd{ \bar{\lambda} }{A\bar{x}} = \inrpd{c}{\bar{x}} \geq 0
+\]
+Thus $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ has no feasible solution.
+\\
+
+
+$C' = \{t \mid t = A^*\lambda  + s, \lambda \in \Rn, s \in K \}$ is a closed convex set. Let $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$  has no feasible solution. i.e $c \notin C'$.
+By strict separating hyperplane theorem, $\exists x \in V$ such that 
+\[ \inrpd{x}{c} < \inrpd{x}{t}\; \forall t \in C'\]
+Using the definition of $C'$, we have 
+\[ \inrpd{x}{c} < \inrpd{x}{s + A^*\lambda} = \inrpd{x}{s}  + \inrpd{x}{A^*\lambda}
+ =  \inrpd{x}{s}  + \inrpd{Ax}{\lambda}
+\; \forall \lambda \in \Rn,  s \in K
+\]
+Thus $\inrpd{x}{s + A^*\lambda}$ is bounded below $\forall \lambda \in \Rn, s \in K$. Additionally $\inrpd{x}{s + A^*\lambda} \geq 0$ as otherwise $\inrpd{x}{\alpha s + \alpha A^*\lambda}$ can made as small as needed contradicting previous statement. Since $0 \in K$, $\inrpd{x}{c} <0$. 
+
+
+Also, $\inrpd{x}{A^*\lambda} = 0$ as otherwise $\inrpd{x}{ s + A^*\lambda}$ can be made negative.
+Therefore $\inrpd{x}{A^*\lambda} = \inrpd{Ax}{\lambda} = 0$. Thus $Ax = 0$ and $\inrpd{x}{s} \geq 0 \; \forall s \in K$ or equivalently $x \in K^*$.
+This proves that $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ is non empty.
+$\square$
+
+
+\subsection{Proof of Strong Duality}
+We will now apply Farkas' lemma to prove strong duality theorem.
+Nope.
+
+
+\appendix
+\section{Appendix}
+\subsection{Characterizations of positive definite matrices}
+If $A \in S^n$, the following are equivalent
+\begin{enumerate}
+\item $x^T A x > 0$ for all $x \in \Rn \setminus{0}$ i.e $A\in S^n_+$
+\item All $n$ eigenvalues $\lambda > 0$
+\item $A = LL^T$ where $L$ is lower triangular with positive diagonal elements
+\item $A = Q\Lambda Q^T$ where $Q$ is orthonormal matrix and $\Lambda$ is a positive diagonal matrix
+\item $x^T A y$ is a inner product
+\end{enumerate}
+
+
+\end{document}
