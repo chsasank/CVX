@@ -315,6 +315,7 @@ We now proceed to the experimental section.
 
 For estimating $\bar{a},\Sigma$, we considered the stock prices of S\&P 500 companies over a span of 10 years. We used this closing day share prices to compute $\bar{a},\Sigma$ for a fixed period of 20 days using suitable adjustments and Guassian model fitting. 
 
+\subsection{Linear Transaction costs}
 
 We first consider the convex-optimization problem (4) with the following parameters for transaction costs and other constraints.
 \begin{align*}
@@ -328,7 +329,7 @@ $$ \eta_1 = 80 \%,\  W_1^{low}=0.9 \  \text{and} \ \eta_2 = 97\%,\  W_2^{low} =0
 \\
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.4]{kaavali.jpg}
+\includegraphics[scale=0.4]{cdf_edited.jpg}
 \caption{Cumulative distributive function of returns for optimal portfolio}
 \label{fig:1}
 \end{figure}
@@ -340,6 +341,20 @@ probability constraints are also drawn in the figure. Note that the 0.7 return (
 for a 97\% confidence level is the active constraint.
 
 
+\subsection{Heuristic implementation}
+
+For numerical examples, we use the same stock data as in the previous example. We specify fixed plus linear transaction costs, and constraints on short-selling and on variance. We
+describe an example with 10 stocks. The parameters used are
+
+\begin{align*}
+w=[w_1,w_2,\ldots,w_{100}]^T &= 0.01*[1,1,\ldots,1]^T\\
+\alpha_1\,\alpha_2,\ldots,\alpha_{100} &=0.01\\
+\beta_1,\beta_2,\ldots,\beta_{100} &= 0.01\\
+ s_1,s_2,\ldots,s_{100} &=0.005\\
+\end{align*}
+
+We considered a small problem with only 10 stocks in-order to compute the exact solution by combinatorial search so that different procedures could be compared. We plot the expected returns against standard deviation of return.
+
 
 %Explain the intutive notion of higher returns stocks onlly
 %operational and rest all selling
@@ -350,7 +365,7 @@ for a 97\% confidence level is the active constraint.
 \begin{thebibliography}{10}
 
 \bibitem{1} Wikipedia
-\bibitem{2} Portfolio optimization with linear and fixed transaction costs, .....
+\bibitem{2} Miguel Sousa Lobo, Maryam Fazel, Stephen BoydPortfolio , \textit{Optimization with linear and fixed transaction costs}, Springer Science + Business Media, LLC 2006
 \end{thebibliography}
 
 
