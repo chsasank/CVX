@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.10.21)  29 APR 2015 17:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.10.21)  29 APR 2015 19:53
 entering extended mode
 **running.tex
 ("C:\Users\Ashok Vardhan\Documents\GitHub\CVX\Report\running.tex"
@@ -291,39 +291,93 @@ LaTeX Font Info:    Try loading font information for U+bbm on input line 64.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\bbm\ubbm.fd"
 File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 )
-Underfull \hbox (badness 10000) in paragraph at lines 121--122
+Underfull \hbox (badness 10000) in paragraph at lines 124--125
 
  []
 
-[2] <img.png, id=18, 299.61937pt x 168.63pt>
+[2] <img.png, id=20, 299.61937pt x 168.63pt>
 File: img.png Graphic file (type png)
  <use img.png>
-Package pdftex.def Info: img.png used on input line 166.
+Package pdftex.def Info: img.png used on input line 169.
 (pdftex.def)             Requested size: 227.62204pt x 128.11124pt.
  [3 <C:/Users/Ashok Vardhan/Documents/GitHub/CVX/Report/img.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 208--209
+Underfull \hbox (badness 10000) in paragraph at lines 210--212
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--216
+Underfull \hbox (badness 10000) in paragraph at lines 215--219
 
  []
 
-[4] ("C:\Users\Ashok Vardhan\Documents\GitHub\CVX\Report\running.aux") ) 
+Missing character: There is no â in font cmr10!
+Missing character: There is no ˆ in font cmr10!
+Missing character: There is no ’ in font cmr10!
+<convex.png, id=25, 402.75468pt x 274.02374pt>
+File: convex.png Graphic file (type png)
+ <use convex.png>
+Package pdftex.def Info: convex.png used on input line 242.
+(pdftex.def)             Requested size: 402.7537pt x 274.02307pt.
+ [4]
+Underfull \hbox (badness 10000) in paragraph at lines 258--259
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 260--262
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
+
+ []
+
+
+LaTeX Warning: Command \l invalid in math mode on input line 265.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 272--276
+
+ []
+
+[5 <C:/Users/Ashok Vardhan/Documents/GitHub/CVX/Report/convex.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 307--309
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 310--311
+
+ []
+
+<kaavali.jpg, id=32, 1371.1225pt x 653.44125pt>
+File: kaavali.jpg Graphic file (type jpg)
+ <use kaavali.jpg>
+Package pdftex.def Info: kaavali.jpg used on input line 331.
+(pdftex.def)             Requested size: 548.43929pt x 261.37187pt.
+
+Overfull \hbox (131.6064pt too wide) in paragraph at lines 331--332
+ [][] 
+ []
+
+[6] [7 <C:/Users/Ashok Vardhan/Documents/GitHub/CVX/Report/kaavali.jpg>]
+("C:\Users\Ashok Vardhan\Documents\GitHub\CVX\Report\running.aux") ) 
 Here is how much of TeX's memory you used:
- 2806 strings out of 493921
- 37431 string characters out of 3147257
- 100945 words of memory out of 3000000
- 6060 multiletter control sequences out of 15000+200000
- 36299 words of font info for 52 fonts, out of 3000000 for 9000
+ 2821 strings out of 493921
+ 37616 string characters out of 3147257
+ 101953 words of memory out of 3000000
+ 6071 multiletter control sequences out of 15000+200000
+ 39566 words of font info for 53 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  37i,12n,28p,588b,224s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Us
-ers\Ashok Vardhan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\public\bbm\dpi600\bb
-m10.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/tex-gyre/q-rm.enc}<C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files
-/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 
+ <C:\Users\
+Ashok Vardhan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\public\bbm\dpi600\bbm7.p
+k> <C:\Users\Ashok Vardhan\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\public\bbm\
+dpi600\bbm10.pk>{C:/Program Files/MiKTeX 2.9/fonts/enc/dvips/tex-gyre/q-rm.enc}
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Prog
+ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 
 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts
 /type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
 blic/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
@@ -331,9 +385,9 @@ nts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/c
 msy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/tex-gyre/qplb.pfb><C:/Pro
 gram Files/MiKTeX 2.9/fonts/type1/public/tex-gyre/qplr.pfb>
-Output written on running.pdf (4 pages, 150124 bytes).
+Output written on running.pdf (7 pages, 229688 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
+ 84 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
