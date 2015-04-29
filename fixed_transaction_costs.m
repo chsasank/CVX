@@ -46,4 +46,10 @@ cvx_begin %quiet
 cvx_end
 
 %% Results
-[w+x_plus- x_neg , x_plus, x_neg, a_bar-1, diag(sigma)]*100
+w_new = w+x_plus- x_neg;
+[w_new , x_plus, x_neg, a_bar-1, diag(sigma)]*100
+
+mu_new = a_bar'*w_new;
+sd_new = sqrt(w_new'*sigma*w_new);
+z = 0:0.001:2;
+plot(z,normcdf(z,mu_new,sd_new))
