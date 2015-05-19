@@ -20,9 +20,9 @@ sigma = cov(returns);
 
 %% Parameters
 w = 1/100*ones(100,1); % Initial portofolio holding
-alpha_plus = 0.01*ones(100,1); % positive transacion costs
-alpha_neg = 0.01*ones(100,1); % negative transacion costs
-s = 0.005*ones(100,1); % shorselling constraint
+alpha_plus = 0.001*ones(100,1); % positive transacion costs
+alpha_neg = 0.001*ones(100,1); % negative transacion costs
+s = 0.000*ones(100,1); % shorselling constraint
 
 eta_1 = 0.80; % confidence for shortfall 1
 W_low_1 = 0.9; % bad return
@@ -47,7 +47,8 @@ cvx_end
 
 %% Results
 w_new = w+x_plus- x_neg;
-d= [w_new , x_plus-x_neg, a_bar-1, diag(sigma)]*100
+d= [w_new , x_plus-x_neg, a_bar-1, diag(sigma)]*100;
+d = d./repmat(sqrt(sum(d.^2)),n,1); %normalize so that can be plotted in one plot
 
 mu_new = a_bar'*w_new;
 sd_new = sqrt(w_new'*sigma*w_new);

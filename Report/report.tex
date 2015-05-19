@@ -307,7 +307,14 @@ $$
 $$
 \\
 
-\textbf{Explanation:} Intuitively, $\delta$ acts like a threshold to determine when $x_i^*$ should be declared zero or not. If $x_i^k$ becomes small k, we see that $\hat{\phi^{k+1}}$ has an increased derivative thus pushing $x_i^{k+1}$ close to zero. This provides a motivation to motivation to the above procedure which helps us to explain the solutions to original problem qualitatively. This also coincides with our intuitive notion that optimal solution should be sparse.\\[0.2em]
+\textbf{Explanation:} Intuitively, $\delta$ acts like a threshold to determine when $x_i^*$ should be declared zero or not. If $x_i^k$ becomes small k, we see that $\hat{\phi^{k+1}}$ has an increased derivative thus pushing $x_i^{k+1}$ close to zero. This provides a motivation to motivation to the above procedure which helps us to explain the solutions to original problem qualitatively. This also coincides with our intuitive notion that optimal solution should be sparse.\\
+An interpretation for heuristic algorithm is that it uses a smooth surrogate function 
+$g(x) = \sum \log(x_i + \delta)$ for fixed cost part of transaction costs. This yields a non convex optimization problem which is solved by linearizing $g(x)$ locally at the previous iterate and solving the resulting convex problem to obtain the next iterate. Therefore, heuristic algorithm converges approximately to a local minimum but global optimum is not guaranteed.
+\\
+
+Observe that each of the convex optimization problem described above is a second order conic program. They can be solved very efficiently using interior point methods. 
+This method works by setting up a logarithmic "barrier" function associated with the convex optimization problem. For more details, see [3]. 
+
 
 We now proceed to the experimental section.
 
@@ -371,12 +378,21 @@ As expected, solutions for problem ignoring fixed transaction costs has better r
 Observe that expected returns from heuristic almost coincide with the that of exhaustive search.
 As we have shown earlier, convex relaxation of the non-convex optimization serves as a global upperbound to these two.
 
+We repeated the experiment with 100 assets and figure \ref{fig:4} shows the transactions for each of the stocks. 
+Observe that most of the transactions are zero and loss making assets are sold away.
+\begin{figure}[h]
+\centering
+\includegraphics[width=5in]{stock_vis2.png}
+\caption{Transactions, mean returns, variance in return for fixed costs variant each of 100 assets}
+\label{fig:4}
+\end{figure}
+
 %\pagebreak
 \begin{thebibliography}{10}
 
 \bibitem{1} \href{http://en.wikipedia.org/wiki/Self-financing\_portfolio}{Self-financing Portfolio, Wikipedia}
 \bibitem{2} Miguel Sousa Lobo, Maryam Fazel, Stephen Boyd , \textit{Portfolio Optimization with linear and fixed transaction costs}, Annals of Operations Research, Dec 2006.
-
+\bibitem{3} Boyd, Stephen, and Lieven Vandenberghe. Convex optimization. Cambridge university press, 2004.
 \end{thebibliography}
 
 

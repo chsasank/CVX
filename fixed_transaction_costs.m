@@ -4,8 +4,10 @@
 clc;clear;addpath('combn')
 stocks_close = load('stocks.mat');
 stocks_close = stocks_close.stocks_close;
-n = 4;
-exhaustive = 0; %exponential time!
+n = 100;
+exhaustive = false; %exponential time!
+sd_sweep = 0.1:0.05:0.3;
+
 %% Estimate means and variances of returns
 t = 20;
 
@@ -17,19 +19,21 @@ p_next = p_next(t+1:end,:);
 
 returns = p_next./p_now;
 a_bar = mean(returns)';
-% Sigma = cov(returns);
-a_bar = a_bar(20:20+n-1);
-Sigma = cov(returns(:,20:20+n-1));
+Sigma = cov(returns);
+% a_bar = a_bar(20:20+n-1);
+% Sigma = cov(returns(:,20:20+n-1));
 
 %% Parameters
 
-w = 1/10*ones(n,1); % Initial portofolio holding
-alpha = 0.01*ones(n,1); % linear transacion costs
-beta = 0.001*ones(n,1); % fixed transaction costs
-s = 0.005*ones(n,1); % shorselling constraint
+% w = 1/10*ones(n,1); % Initial portofolio holding
+% alpha = 0.01*ones(n,1); % linear transacion costs
+% beta = 0.001*ones(n,1); % fixed transaction costs
+% s = 0.005*ones(n,1); % shorselling constraint
 
-sd_sweep = 0.1:0.005:0.3;
-
+w = 1/100*ones(100,1); % Initial portofolio holding
+alpha = 0.001*ones(100,1); % positive transacion costs
+beta = 0.0005*ones(100,1); % negative transacion costs
+s = 0.000*ones(100,1); % shorselling constraint
 %% Solution without regard to fixed costs
 w_1 = zeros(numel(sd_sweep),n);
 mu_1 = zeros(numel(sd_sweep),1);
@@ -201,6 +205,7 @@ for i = 1:numel(sd_sweep)
 end
 toc
 end
+close(h)
 %% Results
 figure
 plot(sd_1,mu_1/sum(w),'c')
@@ -213,4 +218,22 @@ if(exhaustive)
 else
     legend('without regard to fixed costs','upper bound/convexifaction','heuristic')
 end
-close(h)
+
+%%
+w_new = w+x_plus- x_minus;
+d= [w_new , x_plus-x_minus, a_bar-1, diag(Sigma)]*100;
+d = d./repmat(sqrt(sum(d.^2)),n,1); %normalize so that can be plotted in one plot
+
+% mu_new = a_bar'*w_new;
+% sd_new = sqrt(w_new'*Sigma*w_new);
+% z = 0:0.001:2;
+% figure
+% plot(z,normcdf(z,mu_new,sd_new))
+
+figure
+plot(d(:,2))
+hold on
+plot(d(:,3),'r')
+plot(d(:,4),'g:')
+legend('Transactions x','mean returns','variance in return')
+xlabel('Stock')
